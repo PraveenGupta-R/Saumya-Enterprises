@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "saumya-enterprises",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-11-13",
+  "assets": {
+    "directory": "dist/saumya-enterprises/browser",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "saumya-enterprises",
+      // Run `npx wrangler d1 create saumya-enterprises` and paste the printed database_id here.
+      // The placeholder is fine for local development (`npm run api`).
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "worker/migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "saumya-enterprises-media"
+    }
+  ],
+  "observability": { "enabled": true }
+}

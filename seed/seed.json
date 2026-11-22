@@ -1,0 +1,186 @@
+{
+  "settings": {
+    "companyName": "Saumya Enterprises",
+    "proprietor": "Ashok Kumar",
+    "tagline": "Quality You Can Trust, Service You Can Rely On.",
+    "established": 2024,
+    "businessType": "Merchant Exporter, Exporter, Trader and Supplier",
+    "businessNature": "International trading and export of agricultural products from India",
+    "aboutText": "Saumya Enterprises is an India-based export and trading company focused on supplying quality agricultural products to international buyers. Based in Tetari Bazar, Siddharthnagar, Uttar Pradesh, we source fresh produce through our network of farms and traders, grade it to buyer requirements, and coordinate packing, documentation and shipment.\n\nWe began with Indian Red Onion and White Onion, and are building a multi-product export platform that will grow into dry fruits, spices and other agricultural commodities. Our aim is simple: long-term relationships with importers, wholesalers and distributors built on quality, fair pricing and timely delivery.",
+    "warehouse": "Third-party warehouse facilities",
+    "address": "Gandhi Nagar, Tetari Bazar, Naugarh, Siddharthnagar, Uttar Pradesh 272207, India",
+    "phone": "+91 89229 30911",
+    "whatsapp": "918922930911",
+    "email": "saumyaenterprises.sdn@gmail.com",
+    "hours": "09:00 AM – 08:00 PM, every day",
+    "mapQuery": "Tetari Bazar, Naugarh, Siddharthnagar, Uttar Pradesh 272207, India",
+    "siteUrl": "https://saumyaenterprises.in",
+    "logoUrl": "",
+    "social": { "facebook": "", "instagram": "", "linkedin": "", "youtube": "", "x": "" },
+    "markets": [
+      { "country": "United Arab Emirates", "region": "Middle East", "note": "Target market. Importers, wholesalers and distributors." },
+      { "country": "Bangladesh", "region": "South Asia", "note": "Target market. Overland and sea freight options to be discussed per order." },
+      { "country": "Malaysia", "region": "South-East Asia", "note": "Target market. Sea freight in containerised loads." },
+      { "country": "Nepal", "region": "South Asia", "note": "Target market. Road transportation where applicable." }
+    ],
+    "gaMeasurementId": "",
+    "searchConsoleToken": ""
+  },
+
+  "categories": [
+    { "slug": "fresh-vegetables", "name": "Fresh Vegetables", "description": "Fresh onions graded and packed for export.", "sort": 1 },
+    { "slug": "dry-fruits", "name": "Dry Fruits", "description": "Cashew, almonds, pistachios, raisins and makhana.", "sort": 2 },
+    { "slug": "spices", "name": "Spices", "description": "Turmeric, red chilli, coriander and cumin.", "sort": 3 },
+    { "slug": "agricultural-commodities", "name": "Agricultural Commodities", "description": "Other agricultural and food products, introduced as they are confirmed.", "sort": 4 }
+  ],
+
+  "products": [
+    {
+      "slug": "red-onion",
+      "categorySlug": "fresh-vegetables",
+      "name": "Fresh Red Onion",
+      "shortDesc": "Indian Red Onion with red-purple skin, firm texture and naturally pungent flavour. Graded and packed to buyer specification.",
+      "description": "Fresh Red Onion sourced from selected farms in India, known for its attractive red-purple skin, natural pungent flavour, firm texture and excellent cooking quality.\n\nOnions are selected, sorted and graded with a focus on freshness and buyer requirements. Suitable for wholesalers, importers, distributors, supermarkets and food-processing businesses.",
+      "origin": "India",
+      "availability": "available",
+      "specs": [
+        { "label": "Product", "value": "Fresh Red Onion" },
+        { "label": "Variety", "value": "Indian Red Onion" },
+        { "label": "Colour", "value": "Red to deep purple" },
+        { "label": "Shape", "value": "Round / oval" },
+        { "label": "Taste", "value": "Naturally pungent" },
+        { "label": "Texture", "value": "Firm and crisp" },
+        { "label": "Condition", "value": "Fresh and healthy; subject to inspection" },
+        { "label": "Usage", "value": "Cooking and food processing" },
+        { "label": "Shelf life", "value": "Depends on variety and storage conditions" },
+        { "label": "Country of origin", "value": "India" }
+      ],
+      "sizes": [
+        { "name": "Small", "range": "25–40 mm" },
+        { "name": "Medium", "range": "40–55 mm" },
+        { "name": "Large", "range": "55–70 mm" },
+        { "name": "Extra Large", "range": "70 mm and above" }
+      ],
+      "grades": ["Small", "Medium", "Large", "Premium Export Grade"],
+      "packaging": [
+        { "name": "Mesh bags", "detail": "5 kg, 10 kg, 20 kg, 25 kg and 50 kg" },
+        { "name": "Custom packing", "detail": "Customised packaging, labelling and packing configurations can be discussed as per buyer requirements and destination-country regulations." }
+      ],
+      "moq": "As per buyer requirement. Order quantity is finalised based on buyer needs, packaging, destination and shipment feasibility.",
+      "supplyCapacity": "Bulk supply arrangements through our sourcing network and third-party warehouse facilities. Supply is subject to seasonal availability, order specifications and confirmation at the time of inquiry.",
+      "qualityStandards": [
+        "Careful selection, sorting and grading",
+        "Onions free from visible rot and excessive damage",
+        "Clean and suitable packaging",
+        "Appropriate ventilation during storage and transportation",
+        "Supplied in accordance with applicable export and destination-country requirements",
+        "Specific certifications or test reports can be discussed where available and applicable"
+      ],
+      "exportAvailability": "Export inquiries are welcome for the UAE, Bangladesh, Malaysia and Nepal. Actual availability is subject to seasonal supply, prevailing government export policies and destination-country import regulations at the time of order.",
+      "images": ["/assets/img/red-onion.svg", "/assets/img/red-onion-bag.svg"],
+      "seoTitle": "Fresh Red Onion Exporter from India | Saumya Enterprises",
+      "seoDescription": "Export-quality Indian Red Onion in 5–50 kg mesh bags. Graded Small to Premium Export Grade. Request a quote for UAE, Bangladesh, Malaysia and Nepal.",
+      "sort": 1,
+      "published": true
+    },
+    {
+      "slug": "white-onion",
+      "categorySlug": "fresh-vegetables",
+      "name": "Fresh White Onion",
+      "shortDesc": "Indian White Onion with a clean pale skin and a mild, slightly sweet flavour. Graded and packed to buyer specification.",
+      "description": "Fresh White Onion sourced from selected farms in India, with a clean white to pale-cream skin, crisp flesh and a milder, slightly sweet flavour compared with red onion.\n\nOnions are selected, sorted and graded to buyer requirements. Suitable for wholesalers, importers, distributors, food-service buyers and food-processing businesses.",
+      "origin": "India",
+      "availability": "available",
+      "specs": [
+        { "label": "Product", "value": "Fresh White Onion" },
+        { "label": "Variety", "value": "Indian White Onion" },
+        { "label": "Colour", "value": "White to pale cream" },
+        { "label": "Shape", "value": "Round / globular" },
+        { "label": "Taste", "value": "Mild, slightly sweet" },
+        { "label": "Texture", "value": "Crisp" },
+        { "label": "Condition", "value": "Fresh and healthy; subject to inspection" },
+        { "label": "Usage", "value": "Fresh use, cooking, salads and food processing" },
+        { "label": "Shelf life", "value": "Depends on variety and storage conditions" },
+        { "label": "Country of origin", "value": "India" }
+      ],
+      "sizes": [
+        { "name": "Small", "range": "25–40 mm" },
+        { "name": "Medium", "range": "40–55 mm" },
+        { "name": "Large", "range": "55–70 mm" },
+        { "name": "Extra Large", "range": "70 mm and above" }
+      ],
+      "grades": ["Small", "Medium", "Large", "Premium Export Grade"],
+      "packaging": [
+        { "name": "Mesh bags", "detail": "5 kg, 10 kg, 20 kg, 25 kg and 50 kg" },
+        { "name": "Custom packing", "detail": "Customised packaging, labelling and packing configurations can be discussed as per buyer requirements and destination-country regulations." }
+      ],
+      "moq": "As per buyer requirement. Order quantity is finalised based on buyer needs, packaging, destination and shipment feasibility.",
+      "supplyCapacity": "Bulk supply arrangements through our sourcing network and third-party warehouse facilities. Supply is subject to seasonal availability, order specifications and confirmation at the time of inquiry.",
+      "qualityStandards": [
+        "Careful selection, sorting and grading",
+        "Onions free from visible rot and excessive damage",
+        "Clean and suitable packaging",
+        "Appropriate ventilation during storage and transportation",
+        "Supplied in accordance with applicable export and destination-country requirements",
+        "Specific certifications or test reports can be discussed where available and applicable"
+      ],
+      "exportAvailability": "Export inquiries are welcome for the UAE, Bangladesh, Malaysia and Nepal. Actual availability is subject to seasonal supply, prevailing government export policies and destination-country import regulations at the time of order.",
+      "images": ["/assets/img/white-onion.svg", "/assets/img/white-onion-bag.svg"],
+      "seoTitle": "Fresh White Onion Exporter from India | Saumya Enterprises",
+      "seoDescription": "Export-quality Indian White Onion in 5–50 kg mesh bags. Graded Small to Premium Export Grade. Request a quote for UAE, Bangladesh, Malaysia and Nepal.",
+      "sort": 2,
+      "published": true
+    },
+    { "slug": "cashew", "categorySlug": "dry-fruits", "name": "Cashew", "shortDesc": "Planned future product.", "description": "Cashew is part of our planned future range. Please send an inquiry to discuss availability.", "origin": "India", "availability": "coming_soon", "specs": [], "sizes": [], "grades": [], "packaging": [], "moq": "", "supplyCapacity": "", "qualityStandards": [], "exportAvailability": "Not yet available for export. Inquiries welcome.", "images": [], "seoTitle": "", "seoDescription": "", "sort": 10, "published": true },
+    { "slug": "almonds", "categorySlug": "dry-fruits", "name": "Almonds", "shortDesc": "Planned future product.", "description": "Almonds are part of our planned future range. Please send an inquiry to discuss availability.", "origin": "India", "availability": "coming_soon", "specs": [], "sizes": [], "grades": [], "packaging": [], "moq": "", "supplyCapacity": "", "qualityStandards": [], "exportAvailability": "Not yet available for export. Inquiries welcome.", "images": [], "seoTitle": "", "seoDescription": "", "sort": 11, "published": true },
+    { "slug": "pistachios", "categorySlug": "dry-fruits", "name": "Pistachios", "shortDesc": "Planned future product.", "description": "Pistachios are part of our planned future range. Please send an inquiry to discuss availability.", "origin": "India", "availability": "coming_soon", "specs": [], "sizes": [], "grades": [], "packaging": [], "moq": "", "supplyCapacity": "", "qualityStandards": [], "exportAvailability": "Not yet available for export. Inquiries welcome.", "images": [], "seoTitle": "", "seoDescription": "", "sort": 12, "published": true },
+    { "slug": "raisins", "categorySlug": "dry-fruits", "name": "Raisins", "shortDesc": "Planned future product.", "description": "Raisins are part of our planned future range. Please send an inquiry to discuss availability.", "origin": "India", "availability": "coming_soon", "specs": [], "sizes": [], "grades": [], "packaging": [], "moq": "", "supplyCapacity": "", "qualityStandards": [], "exportAvailability": "Not yet available for export. Inquiries welcome.", "images": [], "seoTitle": "", "seoDescription": "", "sort": 13, "published": true },
+    { "slug": "makhana", "categorySlug": "dry-fruits", "name": "Makhana (Fox Nuts)", "shortDesc": "Planned future product.", "description": "Makhana is part of our planned future range. Please send an inquiry to discuss availability.", "origin": "India", "availability": "coming_soon", "specs": [], "sizes": [], "grades": [], "packaging": [], "moq": "", "supplyCapacity": "", "qualityStandards": [], "exportAvailability": "Not yet available for export. Inquiries welcome.", "images": [], "seoTitle": "", "seoDescription": "", "sort": 14, "published": true },
+    { "slug": "turmeric", "categorySlug": "spices", "name": "Turmeric", "shortDesc": "Planned future product.", "description": "Turmeric is part of our planned future range. Please send an inquiry to discuss availability.", "origin": "India", "availability": "coming_soon", "specs": [], "sizes": [], "grades": [], "packaging": [], "moq": "", "supplyCapacity": "", "qualityStandards": [], "exportAvailability": "Not yet available for export. Inquiries welcome.", "images": [], "seoTitle": "", "seoDescription": "", "sort": 20, "published": true },
+    { "slug": "red-chilli", "categorySlug": "spices", "name": "Red Chilli", "shortDesc": "Planned future product.", "description": "Red Chilli is part of our planned future range. Please send an inquiry to discuss availability.", "origin": "India", "availability": "coming_soon", "specs": [], "sizes": [], "grades": [], "packaging": [], "moq": "", "supplyCapacity": "", "qualityStandards": [], "exportAvailability": "Not yet available for export. Inquiries welcome.", "images": [], "seoTitle": "", "seoDescription": "", "sort": 21, "published": true },
+    { "slug": "coriander", "categorySlug": "spices", "name": "Coriander", "shortDesc": "Planned future product.", "description": "Coriander is part of our planned future range. Please send an inquiry to discuss availability.", "origin": "India", "availability": "coming_soon", "specs": [], "sizes": [], "grades": [], "packaging": [], "moq": "", "supplyCapacity": "", "qualityStandards": [], "exportAvailability": "Not yet available for export. Inquiries welcome.", "images": [], "seoTitle": "", "seoDescription": "", "sort": 22, "published": true },
+    { "slug": "cumin", "categorySlug": "spices", "name": "Cumin", "shortDesc": "Planned future product.", "description": "Cumin is part of our planned future range. Please send an inquiry to discuss availability.", "origin": "India", "availability": "coming_soon", "specs": [], "sizes": [], "grades": [], "packaging": [], "moq": "", "supplyCapacity": "", "qualityStandards": [], "exportAvailability": "Not yet available for export. Inquiries welcome.", "images": [], "seoTitle": "", "seoDescription": "", "sort": 23, "published": true }
+  ],
+
+  "certifications": [
+    { "key": "iec", "name": "Import Export Code (IEC)", "status": "obtained", "note": "Issued to Saumya Enterprises. A copy is available to genuine buyers on request.", "sort": 1, "published": true },
+    { "key": "gst", "name": "GST Registration", "status": "obtained", "note": "Registered under GST. A copy is available to genuine buyers on request.", "sort": 2, "published": true },
+    { "key": "udyam", "name": "Udyam (MSME) Registration", "status": "obtained", "note": "Registered as a Micro enterprise. A copy is available on request.", "sort": 3, "published": true },
+    { "key": "ad-code", "name": "AD Code (Customs / Bank registration)", "status": "applied", "note": "Application submitted. Status will be updated once confirmed.", "sort": 4, "published": true },
+    { "key": "apeda", "name": "APEDA RCMC", "status": "pending", "note": "To be obtained. Status will be updated.", "sort": 5, "published": true },
+    { "key": "fssai", "name": "FSSAI Licence", "status": "to_confirm", "note": "Status to be confirmed, if applicable to our operations.", "sort": 6, "published": true },
+    { "key": "phyto", "name": "Phytosanitary Certificate", "status": "on_shipment", "note": "Required for each shipment and arranged at the time of shipment, as required by the destination country.", "sort": 7, "published": true }
+  ],
+
+  "posts": [
+    {
+      "slug": "how-to-choose-onion-size-and-grade-for-import",
+      "title": "How to choose onion size and grade for import",
+      "excerpt": "Size, colour, firmness and packing all affect shelf life and resale value. Here is a practical checklist for importers.",
+      "body": "Choosing the right onion specification before you place an order saves time, money and rejected stock. Here are the points importers most often confirm with their supplier.\n\n## 1. Size range\nOnions are usually sold by diameter. A common range is Small (25–40 mm), Medium (40–55 mm), Large (55–70 mm) and Extra Large (70 mm and above). Supermarkets often prefer medium and large; processors may accept a wider range.\n\n## 2. Colour and skin\nRed onions should show an even red to deep purple skin. White onions should be clean white to pale cream. Dry, intact outer skins protect the bulb during transport.\n\n## 3. Firmness and condition\nOnions should feel firm and crisp, free from visible rot, sprouting and excessive damage. Always agree on an inspection method before shipment.\n\n## 4. Packing\nMesh bags allow air to move through the load, which is important for fresh onions. Bag weights such as 5, 10, 20, 25 or 50 kg can be chosen to suit your market.\n\n## 5. Destination rules\nImport regulations, labelling and permitted pesticide residue limits differ by country. Share your requirements early so they can be reflected in the quotation.\n\nTo discuss a specification for your market, send us a quote request.",
+      "coverUrl": "",
+      "published": true,
+      "publishedAt": "2026-11-18"
+    },
+    {
+      "slug": "why-ventilation-matters-when-shipping-fresh-onions",
+      "title": "Why ventilation matters when shipping fresh onions",
+      "excerpt": "Onions are living produce. Airflow, dryness and temperature during storage and transport decide the condition on arrival.",
+      "body": "Fresh onions continue to breathe after harvest. If they are packed or stored without airflow, heat and moisture build up and the risk of rot and sprouting rises.\n\n## Packing for airflow\nMesh bags let air move through the load. Cartons or sacks without ventilation can trap moisture, so they are not recommended for long journeys unless designed for the purpose.\n\n## Stowing the load\nWhether the cargo moves by road or in a container, the goods should be stowed so that air can circulate. Overloading and tight stacking restrict airflow.\n\n## Keep it dry\nOnions should be cured and dry before packing. Wet or freshly harvested onions are much more likely to deteriorate in transit.\n\n## Plan the timeline\nThe quicker onions move from sorting to the destination, the better the condition on arrival. Good coordination between packing, documentation and freight booking helps avoid waiting time at ports and borders.\n\nOur team coordinates packing and logistics with your freight arrangements. Contact us to discuss your shipment.",
+      "coverUrl": "",
+      "published": true,
+      "publishedAt": "2026-11-12"
+    },
+    {
+      "slug": "documents-importers-ask-for-when-buying-onions-from-india",
+      "title": "Documents importers usually ask for when buying onions from India",
+      "excerpt": "A short overview of the paperwork that commonly accompanies an agricultural export shipment from India.",
+      "body": "Every country has its own import requirements, but the following documents commonly appear in an agricultural export shipment from India. Exact requirements depend on the destination and are confirmed per order.\n\n## Commercial documents\n- Proforma and commercial invoice\n- Packing list\n- Bill of lading or airway bill, or a road transport document for overland shipments\n\n## Regulatory documents\n- Phytosanitary certificate, issued for the shipment when the destination requires it\n- Certificate of origin, if requested by the buyer or the destination country\n- Any additional certificates or test reports agreed in the contract\n\n## Exporter registrations\nAn exporter from India needs an Import Export Code (IEC). Depending on the product and the route, other registrations may also apply.\n\n## Be clear on terms\nAgree the Incoterms, payment terms and inspection method in writing before shipping. If you are unsure which documents your country requires, tell us and we will help coordinate them.",
+      "coverUrl": "",
+      "published": true,
+      "publishedAt": "2026-11-05"
+    }
+  ],
+
+  "testimonials": []
+}

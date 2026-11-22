@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Illustration of white onions packed in a ventilated mesh bag">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6eed9"/><stop offset="1" stop-color="#e3efe8"/></linearGradient>
+    <radialGradient id="wg" cx="0.35" cy="0.3" r="0.9"><stop offset="0" stop-color="#ffffff"/><stop offset="0.6" stop-color="#f1e8d3"/><stop offset="1" stop-color="#d9c9a4"/></radialGradient>
+    <pattern id="mesh" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0H22M0 0V22" stroke="#9b1c3a" stroke-width="2.2" fill="none" opacity=".6"/></pattern>
+    <clipPath id="bagclip"><path d="M230,170 C200,260 190,380 215,500 C300,530 500,530 585,500 C610,380 600,260 570,170 Z"/></clipPath>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <ellipse cx="400" cy="530" rx="240" ry="26" fill="#0f3d2e" opacity=".14"/>
+  <g clip-path="url(#bagclip)">
+    <rect x="180" y="150" width="440" height="400" fill="#efe4c8"/>
+    <g fill="url(#wg)" stroke="#cdbb92" stroke-width="2">
+      <circle cx="270" cy="250" r="62"/><circle cx="395" cy="235" r="66"/><circle cx="520" cy="255" r="60"/>
+      <circle cx="310" cy="350" r="66"/><circle cx="440" cy="345" r="68"/><circle cx="535" cy="380" r="56"/>
+      <circle cx="260" cy="440" r="62"/><circle cx="380" cy="455" r="66"/><circle cx="500" cy="465" r="60"/>
+    </g>
+    <rect x="180" y="150" width="440" height="400" fill="url(#mesh)"/>
+  </g>
+  <path d="M230,170 C200,260 190,380 215,500 C300,530 500,530 585,500 C610,380 600,260 570,170 Z" fill="none" stroke="#8a6a1c" stroke-width="3"/>
+  <path d="M230,170 C300,140 500,140 570,170 L560,196 C490,176 310,176 240,196 Z" fill="#9b1c3a" stroke="#6d1229" stroke-width="2"/>
+  <path d="M340,150 C360,100 440,100 460,150" fill="none" stroke="#6d1229" stroke-width="10" stroke-linecap="round"/>
+  <rect x="318" y="268" width="164" height="96" rx="10" fill="#ffffff" opacity=".95"/>
+  <text x="400" y="304" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#0f3d2e">WHITE ONION</text>
+  <text x="400" y="332" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#52605a">Mesh bag · 5–50 kg</text>
+  <text x="400" y="352" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#9b1c3a">Product of India</text>
+</svg>
