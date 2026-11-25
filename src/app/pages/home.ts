@@ -104,7 +104,7 @@ const DEFAULT_SLIDES = [
           <div class="chips">
             <span class="chip"><app-icon name="check" [size]="16" /> IEC registered exporter</span>
             <span class="chip"><app-icon name="check" [size]="16" /> Bulk &amp; private-label inquiries</span>
-            <span class="chip"><app-icon name="check" [size]="16" /> Made in India</span>
+            <span class="chip"><app-icon name="check" [size]="16" /> From India's Farms to the World</span>
           </div>
         </div>
       </div>
