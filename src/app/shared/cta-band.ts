@@ -7,10 +7,11 @@ import { SiteService } from '../core/site.service';
   imports: [RouterLink],
   styles: [
     `
-      .band { background: linear-gradient(120deg, var(--red-700), #6d1229); color: #fff; padding: 56px 0; }
-      .in { display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
-      h2 { color: #fff; margin: 0 0 8px; }
-      p { margin: 0; color: #f6dfe4; max-width: 620px; }
+      .band { background: linear-gradient(120deg, #ffa24d, #ffc07a 70%, #ffd29b); color: var(--green-900); padding: 56px 0; position: relative; overflow: hidden; }
+      .band::before { content: ''; position: absolute; left: -60px; bottom: -80px; width: 300px; height: 300px; border-radius: 50%; background: rgba(255,255,255,.28); }
+      .in { display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; position: relative; }
+      h2 { color: var(--green-900); margin: 0 0 8px; }
+      p { margin: 0; color: #4a2c10; max-width: 620px; font-size: 1.05rem; }
     `,
   ],
   template: `
@@ -21,8 +22,8 @@ import { SiteService } from '../core/site.service';
           <p>{{ text() }}</p>
         </div>
         <div class="btn-row">
-          <a class="btn btn--gold" routerLink="/request-a-quote">Request a Quote</a>
-          <a class="btn btn--ghost-light" [href]="site.waLink()" target="_blank" rel="noopener noreferrer">WhatsApp {{ site.settings().phone }}</a>
+          <a class="btn btn--green" routerLink="/request-a-quote">Request a Quote</a>
+          <a class="btn btn--ghost" [href]="site.waLink()" target="_blank" rel="noopener noreferrer">WhatsApp {{ site.settings().phone }}</a>
         </div>
       </div>
     </section>

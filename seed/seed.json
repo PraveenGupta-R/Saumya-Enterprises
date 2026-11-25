@@ -2,6 +2,7 @@
   "settings": {
     "companyName": "Saumya Enterprises",
     "proprietor": "Ashok Kumar",
+    "contactPerson": "Hemant",
     "tagline": "Quality You Can Trust, Service You Can Rely On.",
     "established": 2024,
     "businessType": "Merchant Exporter, Exporter, Trader and Supplier",
@@ -16,6 +17,7 @@
     "mapQuery": "Tetari Bazar, Naugarh, Siddharthnagar, Uttar Pradesh 272207, India",
     "siteUrl": "https://saumyaenterprises.in",
     "logoUrl": "",
+    "heroImages": [],
     "social": { "facebook": "", "instagram": "", "linkedin": "", "youtube": "", "x": "" },
     "markets": [
       { "country": "United Arab Emirates", "region": "Middle East", "note": "Target market. Importers, wholesalers and distributors." },

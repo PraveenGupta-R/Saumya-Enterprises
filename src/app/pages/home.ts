@@ -1,24 +1,58 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, afterNextRender, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SiteService } from '../core/site.service';
 import { SeoService } from '../core/seo.service';
 import { IconComponent } from '../shared/icon';
 import { ProductCard } from '../shared/product-card';
 import { CtaBand } from '../shared/cta-band';
+import { AnimatedName } from '../shared/animated-name';
+
+/** Built-in illustrated slides, used until real photos are uploaded in the admin panel. */
+const DEFAULT_SLIDES = [
+  '/assets/hero/slide-1-onions.svg',
+  '/assets/hero/slide-2-bags.svg',
+  '/assets/hero/slide-3-ship.svg',
+  '/assets/hero/slide-4-routes.svg',
+  '/assets/hero/slide-5-truck.svg',
+];
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, IconComponent, ProductCard, CtaBand],
+  imports: [RouterLink, IconComponent, ProductCard, CtaBand, AnimatedName],
   styles: [
     `
-      .hero { position: relative; background: radial-gradient(1200px 500px at 85% -10%, rgba(201,162,75,.28), transparent 60%), linear-gradient(135deg, var(--green-900) 0%, var(--green-800) 55%, var(--green-700) 100%); color: #fff; padding: 84px 0 96px; overflow: hidden; }
-      .hero h1 { color: #fff; font-size: clamp(2.2rem, 5.2vw, 3.9rem); margin-bottom: 18px; }
-      .hero h1 em { color: var(--gold-400); font-style: normal; }
-      .hero p.lead { color: #d4e5db; max-width: 560px; margin-bottom: 30px; }
-      .hero-img { border-radius: 24px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,.35); border: 6px solid rgba(255,255,255,.12); transform: rotate(1.5deg); }
-      .hero-img img { width: 100%; height: auto; }
-      .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
-      .chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; font-size: .88rem; color: #e8f1ec; }
+      .hero { position: relative; min-height: min(82vh, 760px); display: flex; align-items: center; overflow: hidden; background: #ffe3c2; color: var(--ink); }
+      .slides { position: absolute; inset: 0; }
+      .slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% center; opacity: 0; transform: scale(1); transition: opacity 1.4s ease; }
+      .slide.on { opacity: 1; animation: kenburns 9s ease-out forwards; }
+      @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.08); } }
+      .veil { position: absolute; inset: 0; background: linear-gradient(95deg, rgba(255,250,244,.97) 0%, rgba(255,246,235,.92) 34%, rgba(255,238,218,.55) 58%, rgba(255,238,218,0) 82%); }
+      .hero-in { position: relative; z-index: 2; padding-block: 56px 88px; }
+      .hero-copy { max-width: 920px; }
+      .brandrow { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; margin-bottom: 8px; }
+      .brandtext { min-width: 0; }
+      .emblem { height: clamp(116px, 13vw, 176px); width: auto; animation: float 6s ease-in-out infinite; }
+      @keyframes float { 50% { transform: translateY(-8px); } }
+      .welcome { display: inline-block; background: var(--orange); color: var(--green-900); font-weight: 700; letter-spacing: .06em; padding: 9px 22px; border-radius: 6px; font-size: 1.05rem; margin-bottom: 14px; animation: slidein .8s .1s both ease-out; }
+      @keyframes slidein { from { opacity: 0; transform: translateX(-24px); } }
+      .hero h1 { --an-base: var(--green-900); --an-wave: #e8730f; font-size: clamp(2.4rem, 5.5vw, 4.7rem); line-height: 1.05; margin: 0; letter-spacing: -.01em; }
+      .hero .lead, .hero .tag { max-width: 600px; }
+      .tag { font-family: var(--font-head); font-size: clamp(1.15rem, 2.4vw, 1.6rem); color: var(--red-700); margin: 0 0 14px; font-style: italic; animation: slidein .8s 1.3s both ease-out; }
+      .hero p.lead { color: #4d3a2b; max-width: 560px; margin-bottom: 28px; animation: slidein .8s 1.5s both ease-out; }
+      .hero .btn-row { animation: slidein .8s 1.7s both ease-out; }
+      .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+      .chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid rgba(180,80,10,.3); background: rgba(255,255,255,.65); border-radius: 999px; font-size: .88rem; color: var(--green-800); }
+      .dots { position: absolute; z-index: 3; left: 0; right: 0; bottom: 22px; display: flex; justify-content: center; gap: 4px; }
+      .dots button { width: 34px; height: 34px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
+      .dots button::before { content: ''; width: 12px; height: 12px; border-radius: 50%; background: rgba(12,45,49,.28); transition: all .3s; }
+      .dots button.on::before { background: var(--orange); width: 30px; border-radius: 8px; }
+      @media (max-width: 760px) {
+        .veil { background: linear-gradient(180deg, rgba(255,250,244,.93) 0%, rgba(255,243,228,.88) 55%, rgba(255,238,218,.7) 100%); }
+        .hero { min-height: 0; }
+        .hero-in { padding-block: 36px 80px; }
+        .slide { object-position: 78% center; }
+      }
+      @media (prefers-reduced-motion: reduce) { .slide.on { animation: none; } .emblem { animation: none; } }
       .trust { background: #fff; border-bottom: 1px solid var(--line); }
       .trust .container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding-block: 26px; }
       .trust .item { text-align: center; padding: 6px; }
@@ -43,17 +77,29 @@ import { CtaBand } from '../shared/cta-band';
     `,
   ],
   template: `
-    <section class="hero">
-      <div class="container split">
-        <div>
-          <span class="eyebrow" style="color: var(--gold-400)">Indian Agricultural Exporter</span>
-          <h1>Welcome to <em>{{ s().companyName }}</em><br />Your Trusted Export Partner</h1>
+    <section class="hero" aria-roledescription="carousel" aria-label="Saumya Enterprises highlights">
+      <div class="slides" aria-hidden="true">
+        @for (src of slides(); track src; let i = $index) {
+          <img class="slide" [class.on]="i === idx()" [src]="src" alt="" width="1600" height="900" [attr.fetchpriority]="i === 0 ? 'high' : null" [attr.loading]="i === 0 ? 'eager' : 'lazy'" />
+        }
+      </div>
+      <div class="veil"></div>
+      <div class="container hero-in">
+        <div class="hero-copy">
+          <div class="brandrow">
+            <img class="emblem" [src]="logo()" [alt]="s().companyName + ' emblem'" width="150" height="192" />
+            <div class="brandtext">
+              <span class="welcome">Welcome To</span>
+              <h1><app-animated-name [text]="s().companyName" /></h1>
+            </div>
+          </div>
+          <p class="tag">Your Trusted Indian Export Partner</p>
           <p class="lead">
             Premium Indian Red Onion and White Onion for importers, wholesalers and distributors. Graded to your specification, packed for export and supported with documentation.
           </p>
           <div class="btn-row">
-            <a class="btn btn--gold" routerLink="/request-a-quote">Request a Quote</a>
-            <a class="btn btn--ghost-light" routerLink="/products">View Products</a>
+            <a class="btn btn--primary" routerLink="/request-a-quote">Request a Quote</a>
+            <a class="btn btn--ghost" routerLink="/products">View Products</a>
           </div>
           <div class="chips">
             <span class="chip"><app-icon name="check" [size]="16" /> IEC registered exporter</span>
@@ -61,8 +107,14 @@ import { CtaBand } from '../shared/cta-band';
             <span class="chip"><app-icon name="check" [size]="16" /> Made in India</span>
           </div>
         </div>
-        <div class="hero-img"><img src="/assets/img/red-onion.svg" alt="Fresh Indian red onions" width="800" height="600" fetchpriority="high" /></div>
       </div>
+      @if (slides().length > 1) {
+        <div class="dots">
+          @for (src of slides(); track src; let i = $index) {
+            <button type="button" [class.on]="i === idx()" (click)="go(i)" [attr.aria-label]="'Show slide ' + (i + 1)"></button>
+          }
+        </div>
+      }
     </section>
 
     <section class="trust" aria-label="At a glance">
@@ -217,6 +269,24 @@ export class HomePage {
   private seo = inject(SeoService);
   s = this.site.settings;
 
+  slides = computed(() => (this.s().heroImages?.length ? this.s().heroImages : DEFAULT_SLIDES));
+  logo = computed(() => this.s().logoUrl || '/assets/logo/logo-orange.png');
+  idx = signal(0);
+  private timer: ReturnType<typeof setInterval> | undefined;
+
+  go(i: number): void {
+    this.idx.set(i);
+    this.restart();
+  }
+  private restart(): void {
+    clearInterval(this.timer);
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    this.timer = setInterval(() => {
+      if (document.hidden) return;
+      this.idx.update((i) => (i + 1) % Math.max(1, this.slides().length));
+    }, 5500);
+  }
+
   features = [
     { icon: 'quality', title: 'Premium quality products', text: 'Careful selection, sorting and grading, with onions free from visible rot and excessive damage.' },
     { icon: 'price', title: 'Competitive prices', text: 'Direct sourcing through our network helps us offer fair, competitive bulk pricing.' },
@@ -227,6 +297,9 @@ export class HomePage {
   ];
 
   constructor() {
+    const destroy = inject(DestroyRef);
+    afterNextRender(() => this.restart());
+    destroy.onDestroy(() => clearInterval(this.timer));
     this.seo.set({
       title: 'Indian Red & White Onion Exporter | Saumya Enterprises',
       description:

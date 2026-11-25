@@ -8,6 +8,7 @@ import { SiteSettings } from '../core/models';
 const empty = (): SiteSettings => ({
   companyName: '',
   proprietor: '',
+  contactPerson: '',
   tagline: '',
   established: new Date().getFullYear(),
   businessType: '',
@@ -22,6 +23,7 @@ const empty = (): SiteSettings => ({
   mapQuery: '',
   siteUrl: '',
   logoUrl: '',
+  heroImages: [],
   social: { facebook: '', instagram: '', linkedin: '', youtube: '', x: '' },
   markets: [],
   gaMeasurementId: '',
@@ -67,6 +69,12 @@ const empty = (): SiteSettings => ({
         <h3>Logo</h3>
         <adm-images [images]="m.logoUrl ? [m.logoUrl] : []" (imagesChange)="m.logoUrl = $event[0] || ''" [multiple]="false" />
         <p class="help">If you do not upload a logo, the default Saumya Enterprises mark is used. A transparent PNG works best.</p>
+        <h3>Home page banner photos</h3>
+        <adm-images [images]="m.heroImages" (imagesChange)="m.heroImages = $event" [multiple]="true" />
+        <p class="help">
+          These photos slowly change in the background of the home page banner, behind the company name. Use wide landscape photos
+          (at least 1600 pixels across). Leave empty to use the built-in illustrations. Up to 8 photos.
+        </p>
       </div>
 
       <div class="card">
@@ -84,6 +92,11 @@ const empty = (): SiteSettings => ({
           <label class="field"><span>Business email</span><input type="email" [(ngModel)]="m.email" name="em" /></label>
           <label class="field"><span>Business hours</span><input type="text" [(ngModel)]="m.hours" name="hr" /></label>
         </div>
+        <label class="field">
+          <span>Contact person for buyers</span>
+          <input type="text" [(ngModel)]="m.contactPerson" name="cp" placeholder="Hemant" />
+          <small class="help">The name buyers are told to ask for. Shown on the Contact page and in the PDFs.</small>
+        </label>
         <label class="field">
           <span>Google Map location</span>
           <input type="text" [(ngModel)]="m.mapQuery" name="mq" />

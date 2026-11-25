@@ -19,7 +19,7 @@ import { AdminApi } from './admin-api.service';
 
       <aside class="side">
         <div class="brand">
-          <span class="brand-mark">S</span>
+          <img class="brand-logo" src="/assets/logo/logo-light-bold.png" alt="" width="34" height="44" />
           <span>Saumya Enterprises<small>Website admin</small></span>
         </div>
         <nav aria-label="Admin menu">

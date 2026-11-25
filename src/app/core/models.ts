@@ -99,6 +99,8 @@ export interface MarketRow {
 export interface SiteSettings {
   companyName: string;
   proprietor: string;
+  /** person buyers deal with for international inquiries */
+  contactPerson: string;
   tagline: string;
   established: number;
   businessType: string;
@@ -114,6 +116,8 @@ export interface SiteSettings {
   mapQuery: string;
   siteUrl: string;
   logoUrl: string;
+  /** optional hero slideshow photos; when empty the bundled illustrated slides are used */
+  heroImages: string[];
   social: { facebook: string; instagram: string; linkedin: string; youtube: string; x: string };
   markets: MarketRow[];
   gaMeasurementId: string;
