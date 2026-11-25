@@ -1,4 +1,4 @@
-import { DOCUMENT } from '@angular/common';
+﻿import { DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { SiteService } from './site.service';
@@ -97,7 +97,7 @@ export class SeoService {
         addressCountry: 'IN',
       },
       contactPoint: [
-        { '@type': 'ContactPoint', contactType: 'sales', telephone: s.phone, availableLanguage: ['English', 'Hindi'] },
+        { '@type': 'ContactPoint', contactType: 'sales', name: s.contactPerson || s.proprietor, telephone: s.phone, availableLanguage: ['English', 'Hindi'] },
       ],
       sameAs: Object.values(s.social).filter(Boolean),
     };

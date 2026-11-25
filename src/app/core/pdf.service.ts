@@ -3,11 +3,11 @@ import type { jsPDF } from 'jspdf';
 import { Certification, Product, SiteSettings } from './models';
 import { SiteService } from './site.service';
 
-const GREEN: [number, number, number] = [15, 61, 46];
-const RED: [number, number, number] = [155, 28, 58];
-const GOLD: [number, number, number] = [201, 162, 75];
-const INK: [number, number, number] = [29, 42, 36];
-const SOFT: [number, number, number] = [82, 96, 90];
+const GREEN: [number, number, number] = [6, 27, 30];
+const RED: [number, number, number] = [180, 80, 10];
+const GOLD: [number, number, number] = [245, 138, 37];
+const INK: [number, number, number] = [42, 28, 18];
+const SOFT: [number, number, number] = [107, 90, 76];
 
 const STATUS_TEXT: Record<string, string> = {
   obtained: 'Obtained',
@@ -19,6 +19,8 @@ const STATUS_TEXT: Record<string, string> = {
 
 class Page {
   y = 0;
+  /** data URL of the cream logo, shown on cover pages */
+  logo: string | null = null;
   readonly w = 210;
   readonly m = 18;
   readonly bottom = 280;
@@ -116,7 +118,7 @@ class Page {
       const h = Math.max(7.5, lines.length * 5 + 3);
       this.ensure(h);
       if (idx % 2 === 0) {
-        this.doc.setFillColor(238, 244, 240);
+        this.doc.setFillColor(255, 238, 219);
         this.doc.rect(this.m, this.y - 5, this.w - this.m * 2, h, 'F');
       }
       this.doc.setFont('helvetica', 'bold');
@@ -140,13 +142,29 @@ export class PdfService {
     const doc = new jsPDF({ unit: 'mm', format: 'a4' });
     const s = this.site.settings();
     const page = new Page(doc, s);
+    page.logo = await this.loadDataUrl('/assets/logo/logo-light-bold.png');
     return { doc, page, s };
+  }
+
+  private async loadDataUrl(url: string): Promise<string | null> {
+    try {
+      const blob = await (await fetch(url)).blob();
+      return await new Promise<string>((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = () => resolve(r.result as string);
+        r.onerror = reject;
+        r.readAsDataURL(blob);
+      });
+    } catch {
+      return null; // the PDF is still produced, just without the emblem
+    }
   }
 
   private cover(page: Page, s: SiteSettings, title: string, subtitle: string): void {
     const { doc } = page;
     doc.setFillColor(...GREEN);
     doc.rect(0, 0, 210, 297, 'F');
+    if (page.logo) doc.addImage(page.logo, 'PNG', 18, 24, 39, 50);
     doc.setFillColor(...GOLD);
     doc.rect(18, 98, 26, 1.6, 'F');
     doc.setTextColor(255, 255, 255);
@@ -265,7 +283,7 @@ export class PdfService {
     page.rows(this.site.certifications().map((c: Certification): [string, string] => [c.name, STATUS_TEXT[c.status] ?? c.status]));
     page.h2('Contact');
     page.rows([
-      ['Contact person', s.proprietor],
+      ['Contact person', s.contactPerson || s.proprietor],
       ['Phone / WhatsApp', s.phone],
       ['Email', s.email],
       ['Website', s.siteUrl],

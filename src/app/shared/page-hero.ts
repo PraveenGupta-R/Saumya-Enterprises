@@ -6,17 +6,20 @@ import { RouterLink } from '@angular/router';
   imports: [RouterLink],
   styles: [
     `
-      .hero { background: linear-gradient(135deg, var(--green-900), var(--green-700)); color: #fff; padding: 64px 0 56px; position: relative; overflow: hidden; }
-      .hero::after { content: ''; position: absolute; right: -80px; top: -80px; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(201,162,75,.28), transparent 68%); }
-      h1 { color: #fff; margin-bottom: 12px; }
-      p { color: #d4e5db; font-size: 1.1rem; max-width: 720px; margin: 0; }
-      .crumbs { font-size: .85rem; margin-bottom: 18px; color: #a9c4b6; }
-      .crumbs a { color: var(--gold-400); }
-      .eyebrow { color: var(--gold-400); }
+      .hero { background: linear-gradient(120deg, #fff1de 0%, #ffdcb4 55%, #ffc88b 100%); color: var(--ink); padding: 64px 0 56px; position: relative; overflow: hidden; border-bottom: 4px solid var(--orange); }
+      .hero::after { content: ''; position: absolute; right: -90px; top: -90px; width: 360px; height: 360px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.65), transparent 68%); }
+      .wm { position: absolute; right: 5%; top: 50%; height: 210%; max-height: 360px; transform: translateY(-50%); opacity: .13; pointer-events: none; }
+      h1 { color: var(--green-900); margin-bottom: 12px; }
+      p { color: #5a4636; font-size: 1.1rem; max-width: 720px; margin: 0; }
+      .crumbs { font-size: .85rem; margin-bottom: 18px; color: #7a5a3f; }
+      .crumbs a { color: var(--red-700); font-weight: 600; }
+      .eyebrow { color: var(--red-700); }
+      @media (max-width: 640px) { .wm { display: none; } .hero { padding: 44px 0 40px; } }
     `,
   ],
   template: `
     <section class="hero">
+      <img class="wm" src="/assets/logo/logo-orange.png" alt="" width="313" height="401" />
       <div class="container" style="position: relative; z-index: 1">
         <nav class="crumbs" aria-label="Breadcrumb"><a routerLink="/">Home</a> / {{ crumb() || title() }}</nav>
         @if (eyebrow()) { <span class="eyebrow">{{ eyebrow() }}</span> }

@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+﻿import { Component, computed, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SiteService } from '../core/site.service';
 import { SeoService } from '../core/seo.service';
@@ -31,7 +31,7 @@ import { QuoteForm } from '../shared/quote-form';
           <div class="row"><div class="icon-bubble"><app-icon name="pin" /></div><div><h3>Office location</h3><p>{{ s().companyName }}<br />{{ s().address }}</p></div></div>
           <div class="row"><div class="icon-bubble"><app-icon name="phone" /></div><div><h3>Phone / WhatsApp</h3><p><a [href]="'tel:' + tel()">{{ s().phone }}</a></p></div></div>
           <div class="row"><div class="icon-bubble"><app-icon name="mail" /></div><div><h3>Email</h3><p><a [href]="'mailto:' + s().email">{{ s().email }}</a></p></div></div>
-          <div class="row"><div class="icon-bubble"><app-icon name="handshake" /></div><div><h3>International inquiries</h3><p>Contact person: {{ s().proprietor }}</p></div></div>
+          <div class="row"><div class="icon-bubble"><app-icon name="handshake" /></div><div><h3>International inquiries</h3><p>Contact person: {{ s().contactPerson || s().proprietor }}</p></div></div>
           <div class="row"><div class="icon-bubble"><app-icon name="clock" /></div><div><h3>Business hours</h3><p>{{ s().hours }}</p></div></div>
           <div class="btn-row">
             <a class="btn btn--wa" [href]="site.waLink()" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>

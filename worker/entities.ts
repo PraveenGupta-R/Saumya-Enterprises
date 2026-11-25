@@ -231,6 +231,7 @@ export function sanitizeSettings(existing: Json, body: Json): Json {
   return {
     companyName: str(m['companyName'], 120, 'companyName', true),
     proprietor: str(m['proprietor'], 120, 'proprietor'),
+    contactPerson: str(m['contactPerson'], 120, 'contactPerson'),
     tagline: str(m['tagline'], 200, 'tagline'),
     established: int(m['established'], 'established', 2024),
     businessType: str(m['businessType'], 200, 'businessType'),
@@ -245,6 +246,7 @@ export function sanitizeSettings(existing: Json, body: Json): Json {
     mapQuery: str(m['mapQuery'], 300, 'mapQuery'),
     siteUrl: websiteUrl.replace(/\/+$/, ''),
     logoUrl,
+    heroImages: list(m['heroImages'], 8, 'heroImages', (i) => urlField(i, 'hero image') || null),
     social: { facebook: socialUrl('facebook'), instagram: socialUrl('instagram'), linkedin: socialUrl('linkedin'), youtube: socialUrl('youtube'), x: socialUrl('x') },
     markets: list(m['markets'], 40, 'markets', (i) => {
       const o = obj(i, 'markets');

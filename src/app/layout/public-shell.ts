@@ -1,30 +1,31 @@
-﻿import { Component, computed, HostListener, inject, signal } from '@angular/core';
+import { Component, computed, HostListener, inject, signal } from '@angular/core';
 import { NavigationStart, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { SiteService } from '../core/site.service';
 import { PdfService } from '../core/pdf.service';
+import { AnimatedName } from '../shared/animated-name';
 
 @Component({
   selector: 'app-public-shell',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, AnimatedName],
   styles: [
     `
       :host { display: block; }
-      .topbar { background: var(--green-900); color: #cfe0d6; font-size: 0.85rem; }
+      .topbar { background: var(--green-900); color: #ecdcc8; font-size: 0.85rem; }
       .topbar .container { display: flex; justify-content: space-between; gap: 16px; padding-block: 8px; flex-wrap: wrap; }
-      .topbar a { color: #e8f1ec; display: inline-block; padding: 8px 0; margin: -8px 0; min-height: 32px; overflow-wrap: anywhere; }
+      .topbar a { color: #fff3e3; display: inline-block; padding: 8px 0; margin: -8px 0; min-height: 32px; overflow-wrap: anywhere; }
       .topbar a:hover { color: var(--gold-400); }
       .topbar .group { display: flex; gap: 22px; flex-wrap: wrap; }
       header.main { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.97); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-      .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 76px; }
+      .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 92px; }
       .brand { display: flex; align-items: center; gap: 12px; color: var(--green-800); }
       .brand:hover { color: var(--green-800); }
-      .brand img.logo { height: 48px; width: auto; }
+      .brand img.logo { height: 72px; width: auto; }
       .brand .mark { width: 46px; height: 46px; flex: none; }
-      .brand .name { font-family: var(--font-head); font-weight: 700; font-size: 1.25rem; line-height: 1.1; letter-spacing: .01em; }
-      .brand .sub { display: block; font-family: var(--font-body); font-weight: 600; font-size: .64rem; letter-spacing: .22em; color: var(--red-700); margin-top: 3px; }
+      .brand .name { --an-base: var(--green-900); --an-wave: #e8730f; display: block; font-family: var(--font-head); font-weight: 700; font-size: 1.6rem; line-height: 1.1; letter-spacing: .01em; }
+      .brand .sub { display: block; font-family: var(--font-body); font-weight: 600; font-size: .68rem; letter-spacing: .26em; color: var(--red-700); margin-top: 5px; }
       nav.desktop { display: flex; align-items: center; gap: 2px; }
-      nav.desktop > a, .dd > a { padding: 10px 11px; font-weight: 600; font-size: .93rem; color: var(--ink); border-radius: 8px; white-space: nowrap; display: block; }
+      nav.desktop > a, .dd > a { padding: 10px 9px; font-weight: 600; font-size: .93rem; color: var(--ink); border-radius: 8px; white-space: nowrap; display: block; }
       nav.desktop > a:hover, .dd > a:hover, nav.desktop a.active { color: var(--red-700); background: var(--red-100); }
       .dd { position: relative; }
       .dd .menu { display: none; position: absolute; top: 100%; left: 0; min-width: 210px; background: #fff; border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 8px; }
@@ -34,33 +35,34 @@ import { PdfService } from '../core/pdf.service';
       .cta { margin-left: 8px; }
       .burger { display: none; background: none; border: 0; padding: 10px; cursor: pointer; border-radius: 8px; color: var(--green-800); }
       .burger svg { width: 28px; height: 28px; }
-      .drawer { display: none; border-top: 1px solid var(--line); background: #fff; padding: 10px 20px 22px; max-height: calc(100vh - 76px); max-height: calc(100dvh - 76px); overflow-y: auto; }
+      .drawer { display: none; border-top: 1px solid var(--line); background: #fff; padding: 10px 20px 22px; max-height: calc(100vh - 92px); max-height: calc(100dvh - 92px); overflow-y: auto; }
       .drawer a { display: block; padding: 13px 4px; font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--line); }
       .drawer a.sub { padding-left: 20px; font-weight: 500; color: var(--ink-soft); }
       .drawer .btn { margin-top: 16px; width: 100%; }
       .brand { white-space: nowrap; flex: none; }
-      @media (max-width: 1240px) {
+      @media (max-width: 1300px) {
         nav.desktop { display: none; }
         .burger { display: block; }
         .drawer.open { display: block; }
       }
-      @media (max-width: 600px) { .topbar .hide-sm { display: none; } .brand .name { font-size: 1.1rem; } }
+      @media (max-width: 600px) { .topbar .hide-sm { display: none; } .brand .name { font-size: 1.22rem; } .brand img.logo { height: 56px; } .bar { min-height: 76px; } .drawer { max-height: calc(100vh - 76px); max-height: calc(100dvh - 76px); } .brand { gap: 9px; } .brand .sub { letter-spacing: .18em; font-size: .6rem; } }
 
-      footer { background: var(--green-900); color: #c4d6cc; padding: 64px 0 0; margin-top: 0; }
+      footer { background: var(--green-900); color: #dccfbd; padding: 64px 0 0; margin-top: 0; }
       footer h4 { color: #fff; font-family: var(--font-body); font-size: .9rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 16px; }
-      footer a { color: #c4d6cc; }
+      footer a { color: #dccfbd; }
       footer a:hover { color: var(--gold-400); }
       footer ul { list-style: none; padding: 0; margin: 0; }
       footer li { margin-bottom: 9px; }
-      .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 40px; }
+      .foot-grid { display: grid; grid-template-columns: 1.2fr 0.9fr 1fr 1.6fr; gap: 40px; }
       @media (max-width: 900px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
       @media (max-width: 560px) { .foot-grid { grid-template-columns: 1fr; gap: 28px; } }
-      .foot-brand .name { font-family: var(--font-head); color: #fff; font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; display: block; }
+      .foot-brand .name { font-family: var(--font-head); color: #fff; font-size: 1.5rem; font-weight: 700; margin: 8px 0 10px; display: block; }
+      .foot-logo { height: 132px; width: auto; }
       .legal { border-top: 1px solid rgba(255,255,255,.12); margin-top: 48px; padding: 20px 0 28px; font-size: .84rem; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
       .social { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
       .social a { border: 1px solid rgba(255,255,255,.25); border-radius: 999px; padding: 6px 14px; font-size: .85rem; }
       footer li a { display: inline-block; padding: 4px 0; overflow-wrap: anywhere; }
-      .dl { background: none; border: 0; color: #c4d6cc; padding: 6px 0; min-height: 32px; cursor: pointer; font: inherit; text-align: left; }
+      .dl { background: none; border: 0; color: #dccfbd; padding: 6px 0; min-height: 32px; cursor: pointer; font: inherit; text-align: left; }
       .dl:hover { color: var(--gold-400); }
 
       .wa-fab { position: fixed; right: 18px; bottom: 18px; z-index: 60; display: flex; align-items: center; gap: 10px; background: #1faa59; color: #fff; padding: 13px 18px 13px 14px; border-radius: 999px; box-shadow: 0 8px 24px rgba(0,0,0,.28); font-weight: 600; }
@@ -86,18 +88,9 @@ import { PdfService } from '../core/pdf.service';
     <header class="main">
       <div class="container bar">
         <a routerLink="/" class="brand" aria-label="Saumya Enterprises home">
-          @if (s().logoUrl) {
-            <img class="logo" [src]="s().logoUrl" [alt]="s().companyName + ' logo'" />
-          } @else {
-            <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
-              <rect width="64" height="64" rx="14" fill="#0f3d2e" />
-              <path d="M32 11c2 3 3 6 5 8 9 5 12 17 5 23-4 4-14 4-18 0-7-6-4-18 5-23 2-2 3-5 3-8z" fill="#c9a24b" />
-              <path d="M32 15c-5 10-6 22-2 31M32 15c5 10 6 22 2 31" stroke="#0f3d2e" stroke-opacity=".5" stroke-width="2" fill="none" stroke-linecap="round" />
-              <path d="M32 11c-1-3 0-6 3-8" stroke="#c9a24b" stroke-width="2.5" fill="none" stroke-linecap="round" />
-            </svg>
-          }
+          <img class="logo" [src]="s().logoUrl || '/assets/logo/logo-dark-bold.png'" [alt]="s().companyName + ' logo'" width="56" height="72" />
           <span>
-            <span class="name">{{ s().companyName }}</span>
+            <app-animated-name class="name" [text]="s().companyName" [step]="45" />
             <span class="sub">EXPORT &amp; TRADING</span>
           </span>
         </a>
@@ -152,6 +145,7 @@ import { PdfService } from '../core/pdf.service';
       <div class="container">
         <div class="foot-grid">
           <div class="foot-brand">
+            <img class="foot-logo" [src]="s().logoUrl || '/assets/logo/logo-light-bold.png'" [alt]="s().companyName + ' logo'" width="103" height="132" loading="lazy" />
             <span class="name">{{ s().companyName }}</span>
             <p>{{ s().tagline }}</p>
             <p>Merchant exporter and trader of agricultural products from India.</p>

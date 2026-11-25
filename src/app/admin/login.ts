@@ -9,7 +9,7 @@ import { AdminApi } from './admin-api.service';
   template: `
     <div class="login-wrap">
       <div class="login-card">
-        <div class="brand dark"><span class="brand-mark">S</span><span>Saumya Enterprises</span></div>
+        <div class="brand dark"><img class="brand-logo" src="/assets/logo/logo-dark-bold.png" alt="" width="34" height="44" /><span>Saumya Enterprises</span></div>
         <h1>Owner login</h1>
         <p class="muted">Sign in to manage your website, products and buyer inquiries.</p>
 
