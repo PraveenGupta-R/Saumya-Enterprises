@@ -11,6 +11,8 @@ import { AnimatedName } from '../shared/animated-name';
   styles: [
     `
       :host { display: block; }
+      .skip { position: absolute; left: -9999px; top: 8px; z-index: 200; background: #fff; color: var(--green-900); padding: 10px 16px; border-radius: 8px; font-weight: 600; box-shadow: var(--shadow); }
+      .skip:focus { left: 12px; }
       .topbar { background: var(--green-900); color: #ecdcc8; font-size: 0.85rem; }
       .topbar .container { display: flex; justify-content: space-between; gap: 16px; padding-block: 8px; flex-wrap: wrap; }
       .topbar a { color: #fff3e3; display: inline-block; padding: 8px 0; margin: -8px 0; min-height: 32px; overflow-wrap: anywhere; }
@@ -26,7 +28,7 @@ import { AnimatedName } from '../shared/animated-name';
       .brand .sub { display: block; font-family: var(--font-body); font-weight: 600; font-size: .68rem; letter-spacing: .26em; color: var(--red-700); margin-top: 5px; }
       nav.desktop { display: flex; align-items: center; gap: 2px; }
       nav.desktop > a, .dd > a { padding: 10px 9px; font-weight: 600; font-size: .93rem; color: var(--ink); border-radius: 8px; white-space: nowrap; display: block; }
-      nav.desktop > a:hover, .dd > a:hover, nav.desktop a.active { color: var(--red-700); background: var(--red-100); }
+      nav.desktop > a:hover, .dd > a:hover, nav.desktop a.active { color: #8a3d05; background: var(--red-100); }
       .dd { position: relative; }
       .dd .menu { display: none; position: absolute; top: 100%; left: 0; min-width: 210px; background: #fff; border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 8px; }
       .dd:hover .menu, .dd:focus-within .menu { display: block; }
@@ -65,13 +67,14 @@ import { AnimatedName } from '../shared/animated-name';
       .dl { background: none; border: 0; color: #dccfbd; padding: 6px 0; min-height: 32px; cursor: pointer; font: inherit; text-align: left; }
       .dl:hover { color: var(--gold-400); }
 
-      .wa-fab { position: fixed; right: 18px; bottom: 18px; z-index: 60; display: flex; align-items: center; gap: 10px; background: #1faa59; color: #fff; padding: 13px 18px 13px 14px; border-radius: 999px; box-shadow: 0 8px 24px rgba(0,0,0,.28); font-weight: 600; }
-      .wa-fab:hover { background: #178a47; color: #fff; transform: translateY(-2px); }
+      .wa-fab { position: fixed; right: 18px; bottom: 18px; z-index: 60; display: flex; align-items: center; gap: 10px; background: #14803f; color: #fff; padding: 13px 18px 13px 14px; border-radius: 999px; box-shadow: 0 8px 24px rgba(0,0,0,.28); font-weight: 600; }
+      .wa-fab:hover { background: #0f6a33; color: #fff; transform: translateY(-2px); }
       .wa-fab svg { width: 28px; height: 28px; flex: none; }
       @media (max-width: 560px) { .wa-fab span { display: none; } .wa-fab { padding: 14px; } }
     `,
   ],
   template: `
+    <a class="skip" [routerLink]="[]" fragment="main">Skip to main content</a>
     <div class="topbar">
       <div class="container">
         <div class="group">
@@ -139,7 +142,7 @@ import { AnimatedName } from '../shared/animated-name';
       </div>
     </header>
 
-    <main id="main"><router-outlet /></main>
+    <main id="main" tabindex="-1"><router-outlet /></main>
 
     <footer>
       <div class="container">

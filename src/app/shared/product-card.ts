@@ -30,7 +30,7 @@ import { Product } from '../core/models';
           <span class="badge badge--{{ product().availability }}">{{ label() }}</span>
           <h3>{{ product().name }}</h3>
           <p>{{ product().shortDesc }}</p>
-          <span class="more">View specifications &rarr;</span>
+          <span class="more">{{ product().availability === 'available' ? 'View specifications' : 'Ask about this product' }} &rarr;</span>
         </div>
       </article>
     </a>

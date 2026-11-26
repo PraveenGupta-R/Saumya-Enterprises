@@ -1,4 +1,4 @@
-﻿import { DOCUMENT } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { SiteService } from './site.service';
@@ -27,7 +27,7 @@ export class SeoService {
     const base = (s.siteUrl || '').replace(/\/$/, '');
     const url = base + (p.path === '/' ? '/' : p.path);
     const fullTitle = p.title.includes(s.companyName) ? p.title : `${p.title} | ${s.companyName}`;
-    const image = p.image ? (p.image.startsWith('http') ? p.image : base + p.image) : base + '/assets/img/red-onion.svg';
+    const image = p.image ? (p.image.startsWith('http') ? p.image : base + p.image) : base + '/assets/hero/photo-1-truck.jpg';
     const desc = p.description.slice(0, 300);
 
     this.title.setTitle(fullTitle);

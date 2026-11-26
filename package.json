@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "dev": "node scripts/dev.mjs",
     "api": "wrangler dev --port 8787",
     "seed:gen": "node scripts/gen-seed.mjs",
     "db:init": "wrangler d1 migrations apply saumya-enterprises --local && node scripts/gen-seed.mjs && wrangler d1 execute saumya-enterprises --local --file worker/seed.sql",

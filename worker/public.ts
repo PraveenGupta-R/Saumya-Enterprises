@@ -4,6 +4,7 @@ import {
 } from './lib';
 import { EntityConfig, categories, certifications, inquiryFromRow, posts, products, testimonials } from './entities';
 import { sendInquiryEmails } from './email';
+import { sendInquiryWhatsApp } from './whatsapp';
 
 export const publicApi = new Hono<AppEnv>();
 
@@ -58,8 +59,13 @@ publicApi.post('/inquiries', async (c) => {
   if (!EMAIL_RE.test(email)) throw new HttpError(400, 'Please enter a valid email address');
   const country = str(body['country'], 100, 'Country', true);
   const company = str(body['company'], 160, 'Company');
-  const whatsapp = str(body['whatsapp'], 40, 'WhatsApp number');
-  if (whatsapp && !/^[+\d][\d\s()-]{5,}$/.test(whatsapp)) throw new HttpError(400, 'Please enter a valid WhatsApp number');
+  // accept any normal way of writing a number (spaces, dots, dashes, brackets, slashes); keep + and digits only
+  const whatsappRaw = str(body['whatsapp'], 40, 'WhatsApp number');
+  const whatsapp = whatsappRaw.replace(/[^\d+]/g, '');
+  // the mobile number is mandatory: it is how the owner contacts the buyer directly
+  if (!/^\+?\d{6,15}$/.test(whatsapp)) {
+    throw new HttpError(400, whatsappRaw ? 'Please enter a valid mobile number with country code, for example +971 50 123 4567' : 'Please enter your WhatsApp / mobile number so we can contact you directly');
+  }
   const quantity = str(body['quantity'], 120, 'Quantity');
   const message = str(body['message'], 4000, 'Message');
   if (!quantity && !message) throw new HttpError(400, 'Please tell us the required quantity or your product requirements');
@@ -67,7 +73,7 @@ publicApi.post('/inquiries', async (c) => {
 
   const db = c.env.DB;
   const ip = await clientIpHash(c);
-  if ((await rateCount(db, 'inquiry', ip, 3_600_000)) >= 5) {
+  if ((await rateCount(db, 'inquiry', ip, 3_600_000)) >= 8) {
     throw new HttpError(429, 'Too many inquiries from your connection. Please try again later or contact us on WhatsApp.');
   }
 
@@ -89,11 +95,8 @@ publicApi.post('/inquiries', async (c) => {
 
   const site = await db.prepare("SELECT value FROM settings WHERE key = 'site'").first<{ value: string }>();
   const companyName = parseJson<{ companyName?: string }>(site?.value, {}).companyName || 'Saumya Enterprises';
-  c.executionCtx.waitUntil(
-    sendInquiryEmails(c.env, companyName, {
-      id: q['id'], productName, name, company, country, email, whatsapp, quantity, message,
-    }),
-  );
+  const mail = { id: q['id'] as number, productName, name, company, country, email, whatsapp, quantity, message };
+  c.executionCtx.waitUntil(Promise.allSettled([sendInquiryEmails(c.env, companyName, mail), sendInquiryWhatsApp(c.env, companyName, mail)]));
   return c.json({ ok: true, id: q['id'] }, 201);
 });
 

@@ -73,7 +73,7 @@ const empty = (): SiteSettings => ({
         <adm-images [images]="m.heroImages" (imagesChange)="m.heroImages = $event" [multiple]="true" />
         <p class="help">
           These photos slowly change in the background of the home page banner, behind the company name. Use wide landscape photos
-          (at least 1600 pixels across). Leave empty to use the built-in illustrations. Up to 8 photos.
+          (at least 1600 pixels across). Leave empty to use the built-in photos (truck, warehouse and ship). Up to 8 photos.
         </p>
       </div>
 

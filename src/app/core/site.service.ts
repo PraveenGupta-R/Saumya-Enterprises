@@ -117,11 +117,16 @@ export class SiteService {
       return { ok: true };
     } catch (e: unknown) {
       const err = e as { error?: { error?: string }; status?: number };
-      const msg =
-        err?.error?.error ||
-        (err?.status === 429
-          ? 'Too many requests. Please try again later or contact us on WhatsApp.'
-          : 'We could not send your inquiry just now. Please try again or contact us on WhatsApp.');
+      const status = err?.status ?? 0;
+      let msg = err?.error?.error; // the server explains validation problems itself, e.g. "Please enter a valid email address"
+      if (!msg) {
+        msg =
+          status === 429
+            ? 'Too many inquiries were sent from this connection. Please try again in a while.'
+            : status === 0 || status === 404 || status >= 500
+              ? 'Our inquiry service could not be reached just now, so nothing was saved.'
+              : 'We could not send your inquiry just now.';
+      }
       return { ok: false, error: msg };
     }
   }
