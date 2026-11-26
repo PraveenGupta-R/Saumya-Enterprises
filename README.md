@@ -1,4 +1,4 @@
-﻿# Saumya Enterprises – export website
+# Saumya Enterprises – export website
 
 Angular 20 (prerendered for SEO) + Cloudflare Worker API (Hono) + D1 database + R2 image storage.
 
@@ -9,7 +9,9 @@ npm run db:init     # creates local database and loads the starting content
 npx ng build        # builds the public site and admin into dist/
 npm run api         # http://localhost:8787 (site + API + /admin)
 ```
-For live-reload while developing the front end, run `npm run api` in one terminal and `npm start` in another (proxies /api to 8787).
+For live-reload while developing, run `npm run dev`: it starts the API and the Angular dev server together. Both must be running, otherwise the inquiry form cannot save anything (use `npm start` alone and every inquiry will fail).
+
+The inquiry form has two buttons: **Send Inquiry** saves the request (database + optional email/WhatsApp notification) and **Send on WhatsApp** opens WhatsApp with the details as numbered points.
 
 Local admin login: see `.dev.vars` (never used in production).
 

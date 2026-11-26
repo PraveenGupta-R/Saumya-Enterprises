@@ -91,7 +91,7 @@ export class CertificationsPage {
   site = inject(SiteService);
   constructor() {
     inject(SeoService).set({
-      title: 'Quality & Certifications: IEC, GST and Export Compliance',
+      title: 'Quality & Certifications',
       description: 'Registrations and compliance status of Saumya Enterprises: IEC, GST, Udyam, AD Code, APEDA RCMC, FSSAI and phytosanitary certificate arrangements.',
       path: '/quality-certifications',
     });

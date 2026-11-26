@@ -34,7 +34,7 @@ import { CtaBand } from '../shared/cta-band';
       </div>
     </section>
 
-    @if (upcomingByCategory().length) {
+    @if (upcomingPhoto().length || upcomingByCategory().length) {
       <section class="section section--alt">
         <div class="container">
           <div class="section-head">
@@ -42,6 +42,11 @@ import { CtaBand } from '../shared/cta-band';
             <h2>Planned product expansion</h2>
             <p>These products are not yet available for export. Send an inquiry if you would like us to consider them for your requirement.</p>
           </div>
+          @if (upcomingPhoto().length) {
+            <div class="grid grid-4" style="margin-bottom: 32px">
+              @for (p of upcomingPhoto(); track p.slug) { <app-product-card [product]="p" /> }
+            </div>
+          }
           <div class="grid grid-3">
             @for (g of upcomingByCategory(); track g.name) {
               <div class="card">
@@ -63,9 +68,12 @@ export class ProductsPage {
   site = inject(SiteService);
   private pdf = inject(PdfService);
 
+  /** coming-soon products that have a photo get a full card */
+  upcomingPhoto = computed(() => this.site.upcomingProducts().filter((p) => p.images.length));
+
   upcomingByCategory = computed(() => {
     const groups = new Map<string, { name: string; items: ReturnType<SiteService['products']> }>();
-    for (const p of this.site.upcomingProducts()) {
+    for (const p of this.site.upcomingProducts().filter((x) => !x.images.length)) {
       const name = this.site.categoryName(p.categoryId) || 'Other products';
       if (!groups.has(name)) groups.set(name, { name, items: [] });
       groups.get(name)!.items.push(p);

@@ -10,6 +10,11 @@ export interface Env {
   RESEND_API_KEY?: string;
   MAIL_FROM?: string;
   NOTIFY_EMAIL?: string;
+  WHATSAPP_TOKEN?: string;
+  WHATSAPP_PHONE_NUMBER_ID?: string;
+  WHATSAPP_NOTIFY_TO?: string;
+  WHATSAPP_TEMPLATE?: string;
+  WHATSAPP_TEMPLATE_LANG?: string;
 }
 export type AppEnv = { Bindings: Env };
 export type Ctx = Context<AppEnv>;

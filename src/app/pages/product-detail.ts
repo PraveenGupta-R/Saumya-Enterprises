@@ -72,7 +72,7 @@ import { ProductCard } from '../shared/product-card';
                 <div class="fact"><b>Grades</b>{{ p.grades.length ? p.grades.length + ' grades' : 'On request' }}</div>
               </div>
               <div class="btn-row">
-                <a class="btn btn--primary" href="#quote">Request a Quote</a>
+                <a class="btn btn--primary" [routerLink]="[]" fragment="quote">Request a Quote</a>
                 <a class="btn btn--wa" [href]="site.waLinkFor(waText(p))" target="_blank" rel="noopener noreferrer">WhatsApp about {{ p.name }}</a>
                 <button type="button" class="btn btn--ghost" (click)="download(p)">Product Sheet (PDF)</button>
               </div>
@@ -215,7 +215,7 @@ export class ProductDetailPage {
       this.site.waContext.set(this.waText(p));
       const image = p.images[0];
       this.seo.set({
-        title: p.seoTitle || `${p.name} Exporter from India`,
+        title: p.seoTitle || (p.availability === 'available' ? `${p.name} Exporter from India` : `${p.name} (coming soon)`),
         description: p.seoDescription || p.shortDesc,
         path: `/products/${p.slug}`,
         image,

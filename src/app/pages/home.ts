@@ -1,4 +1,5 @@
 import { Component, DestroyRef, afterNextRender, computed, inject, signal } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SiteService } from '../core/site.service';
 import { SeoService } from '../core/seo.service';
@@ -7,26 +8,32 @@ import { ProductCard } from '../shared/product-card';
 import { CtaBand } from '../shared/cta-band';
 import { AnimatedName } from '../shared/animated-name';
 
-/** Built-in illustrated slides, used until real photos are uploaded in the admin panel. */
+/** Banner photos shown until others are uploaded in the admin panel (Settings > Home page banner photos). */
 const DEFAULT_SLIDES = [
-  '/assets/hero/slide-1-onions.svg',
-  '/assets/hero/slide-2-bags.svg',
-  '/assets/hero/slide-3-ship.svg',
-  '/assets/hero/slide-4-routes.svg',
-  '/assets/hero/slide-5-truck.svg',
+  '/assets/hero/photo-1-truck.jpg',
+  '/assets/hero/photo-2-warehouse.jpg',
+  '/assets/hero/photo-3-ship.jpg',
 ];
+
+/** Which part of each photo stays in view when the screen is narrow (phones crop the sides). */
+const FOCUS: Record<string, string> = { 'photo-1-truck': '56% 50%', 'photo-2-warehouse': '50% 50%', 'photo-3-ship': '42% 50%' };
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, IconComponent, ProductCard, CtaBand, AnimatedName],
+  imports: [RouterLink, NgClass, IconComponent, ProductCard, CtaBand, AnimatedName],
   styles: [
     `
       .hero { position: relative; min-height: min(82vh, 760px); display: flex; align-items: center; overflow: hidden; background: #ffe3c2; color: var(--ink); }
-      .slides { position: absolute; inset: 0; }
-      .slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% center; opacity: 0; transform: scale(1); transition: opacity 1.4s ease; }
-      .slide.on { opacity: 1; animation: kenburns 9s ease-out forwards; }
-      @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.08); } }
-      .veil { position: absolute; inset: 0; background: linear-gradient(95deg, rgba(255,250,244,.97) 0%, rgba(255,246,235,.92) 34%, rgba(255,238,218,.55) 58%, rgba(255,238,218,0) 82%); }
+      .media { position: absolute; inset: 0; }
+      .slides { position: absolute; inset: 0; overflow: hidden; }
+      /* carousel: pictures slide in from the right, one after another, with a slow zoom */
+      .slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: translateX(100%); filter: saturate(.82) brightness(1.04); }
+      .slide.on, .slide.prev { transition: transform 2.4s cubic-bezier(.45, 0, .2, 1); }
+      .slide.on { transform: none; animation: kenburns 16s ease-out forwards; }
+      .slide.prev { transform: translateX(-100%); scale: 1.07; }
+      @keyframes kenburns { from { scale: 1; } to { scale: 1.07; } }
+      /* soft cream wash so the pictures sit lightly behind the text */
+      .veil { position: absolute; inset: 0; background: linear-gradient(95deg, rgba(255,250,244,.96) 0%, rgba(255,247,238,.9) 36%, rgba(255,243,230,.62) 62%, rgba(255,243,230,.4) 100%); }
       .hero-in { position: relative; z-index: 2; padding-block: 56px 88px; }
       .hero-copy { max-width: 920px; }
       .brandrow { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; margin-bottom: 8px; }
@@ -46,19 +53,39 @@ const DEFAULT_SLIDES = [
       .dots button { width: 34px; height: 34px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
       .dots button::before { content: ''; width: 12px; height: 12px; border-radius: 50%; background: rgba(12,45,49,.28); transition: all .3s; }
       .dots button.on::before { background: var(--orange); width: 30px; border-radius: 8px; }
-      @media (max-width: 760px) {
-        .veil { background: linear-gradient(180deg, rgba(255,250,244,.93) 0%, rgba(255,243,228,.88) 55%, rgba(255,238,218,.7) 100%); }
-        .hero { min-height: 0; }
-        .hero-in { padding-block: 36px 80px; }
-        .slide { object-position: 78% center; }
+      /* Tablets and small windows */
+      @media (max-width: 900px) {
+        .hero { min-height: min(80vh, 700px); }
+        .hero-in { padding-block: 40px 76px; }
+        .hero-copy { max-width: 64%; }
+        .veil { background: linear-gradient(95deg, rgba(255,250,244,.97) 0%, rgba(255,247,238,.94) 54%, rgba(255,243,230,.66) 76%, rgba(255,243,230,.46) 100%); }
+        .emblem { height: 104px; }
+        .hero h1 { font-size: clamp(2rem, 6.4vw, 3.3rem); }
+        .hero .lead, .hero .tag { max-width: none; }
       }
-      @media (prefers-reduced-motion: reduce) { .slide.on { animation: none; } .emblem { animation: none; } }
+      /* Phones: the photo fills the banner behind the text, as a light wash */
+      @media (max-width: 600px) {
+        .hero { min-height: 0; align-items: flex-start; }
+        .hero-in { padding-block: 28px 64px; }
+        .hero-copy { max-width: none; }
+        .veil { background: linear-gradient(to bottom, rgba(255,250,244,.8) 0%, rgba(255,248,238,.72) 45%, rgba(255,248,238,.78) 100%); }
+        .dots { bottom: 12px; }
+        .brandrow { gap: 14px; flex-wrap: nowrap; }
+        .emblem { height: 84px; }
+        .welcome { font-size: .9rem; padding: 6px 14px; margin-bottom: 8px; }
+        .hero h1 { font-size: 2.15rem; }
+        .tag { font-size: 1.1rem; }
+        .hero p.lead { font-size: 1rem; margin-bottom: 20px; }
+        .hero .btn-row .btn { flex: 1 1 100%; }
+        .chips { gap: 8px; margin-top: 18px; }
+        .chip { font-size: .82rem; padding: 7px 12px; }
+      }      @media (prefers-reduced-motion: reduce) { .slide.on { animation: none; } .emblem { animation: none; } }
       .trust { background: #fff; border-bottom: 1px solid var(--line); }
       .trust .container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding-block: 26px; }
       .trust .item { text-align: center; padding: 6px; }
       .trust .num { font-family: var(--font-head); font-size: 1.7rem; color: var(--red-700); font-weight: 700; line-height: 1.1; }
       .trust .lbl { font-size: .85rem; color: var(--ink-soft); }
-      @media (max-width: 760px) { .trust .container { grid-template-columns: repeat(2, 1fr); } .hero { padding: 56px 0 64px; } .hero-img { transform: none; } }
+      @media (max-width: 760px) { .trust .container { grid-template-columns: repeat(2, 1fr); } }
       .steps { counter-reset: s; display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
       .step { position: relative; text-align: center; padding: 8px; }
       .step::before { counter-increment: s; content: counter(s); display: grid; place-items: center; width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 50%; background: var(--gold-500); color: var(--green-900); font-weight: 700; font-size: 1.15rem; }
@@ -74,16 +101,24 @@ const DEFAULT_SLIDES = [
       .market { display: flex; gap: 14px; align-items: flex-start; }
       .market .flag { width: 44px; height: 44px; border-radius: 12px; background: var(--gold-100); color: var(--red-700); display: grid; place-items: center; font-weight: 700; flex: none; }
       .tcard p { font-style: italic; }
+      .soon-title { text-align: center; margin: 44px 0 18px; }
+      .soon-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+      .soon-card { display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 12px 18px; color: var(--ink); box-shadow: var(--shadow-sm); transition: transform .2s, box-shadow .2s; }
+      .soon-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); color: var(--ink); }
+      .soon-card img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 10px; background: #fff; }
+      .soon-name { font-family: var(--font-head); font-weight: 700; font-size: 1.08rem; color: var(--green-800); }
+      @media (max-width: 900px) { .soon-grid { grid-template-columns: repeat(2, 1fr); } }
     `,
   ],
   template: `
-    <section class="hero" aria-roledescription="carousel" aria-label="Saumya Enterprises highlights">
+    <section class="hero" aria-roledescription="carousel" aria-label="Saumya Enterprises highlights" (touchstart)="touchStart($event)" (touchend)="touchEnd($event)" (mouseenter)="paused = true" (mouseleave)="paused = false" (focusin)="paused = true" (focusout)="paused = false">
+      <div class="media">
       <div class="slides" aria-hidden="true">
         @for (src of slides(); track src; let i = $index) {
-          <img class="slide" [class.on]="i === idx()" [src]="src" alt="" width="1600" height="900" [attr.fetchpriority]="i === 0 ? 'high' : null" [attr.loading]="i === 0 ? 'eager' : 'lazy'" />
-        }
-      </div>
+          <picture>@if (mobileSrc(src); as ms) {<source media="(max-width: 700px)" [attr.srcset]="ms" />}<img class="slide" [ngClass]="state(i)" [style.object-position]="pos(src)" [src]="src" alt="" width="1600" height="900" [attr.fetchpriority]="i === 0 ? 'high' : null" [attr.loading]="i === 0 ? 'eager' : 'lazy'" /></picture>
+        }      </div>
       <div class="veil"></div>
+      </div>
       <div class="container hero-in">
         <div class="hero-copy">
           <div class="brandrow">
@@ -104,17 +139,18 @@ const DEFAULT_SLIDES = [
           <div class="chips">
             <span class="chip"><app-icon name="check" [size]="16" /> IEC registered exporter</span>
             <span class="chip"><app-icon name="check" [size]="16" /> Bulk &amp; private-label inquiries</span>
-            <span class="chip"><app-icon name="check" [size]="16" /> Made in India</span>
+            <span class="chip"><app-icon name="check" [size]="16" /> From India's Farms to the World</span>
           </div>
         </div>
       </div>
-      @if (slides().length > 1) {
-        <div class="dots">
-          @for (src of slides(); track src; let i = $index) {
-            <button type="button" [class.on]="i === idx()" (click)="go(i)" [attr.aria-label]="'Show slide ' + (i + 1)"></button>
-          }
-        </div>
-      }
+    @if (slides().length > 1) {
+      <div class="dots">
+        @for (src of slides(); track src; let i = $index) {
+          <button type="button" [class.on]="i === idx()" (click)="go(i)" [attr.aria-label]="'Show slide ' + (i + 1)"></button>
+        }
+      </div>
+    }
+
     </section>
 
     <section class="trust" aria-label="At a glance">
@@ -158,10 +194,24 @@ const DEFAULT_SLIDES = [
             <app-product-card [product]="p" />
           }
         </div>
-        @if (site.upcomingProducts().length) {
-          <p class="center muted" style="margin-top: 28px">
-            Planned future range: {{ upcomingNames() }}. <a routerLink="/products">See all products</a>
+        @if (soonPhoto().length) {
+          <h3 class="soon-title">Coming soon to our range</h3>
+          <div class="soon-grid">
+            @for (p of soonPhoto(); track p.slug) {
+              <a class="soon-card" [routerLink]="['/products', p.slug]">
+                <img [src]="p.images[0]" [alt]="p.name" loading="lazy" width="500" height="333" />
+                <span class="soon-name">{{ p.name }}</span>
+                <span class="badge badge--coming_soon">Coming soon</span>
+              </a>
+            }
+          </div>
+        }
+        @if (soonNoPhoto().length) {
+          <p class="center muted" style="margin-top: 24px">
+            Also planned: {{ soonNoPhoto() }}. <a routerLink="/products">See all products</a>
           </p>
+        } @else {
+          <p class="center" style="margin-top: 24px"><a routerLink="/products">See all products</a></p>
         }
       </div>
     </section>
@@ -274,6 +324,34 @@ export class HomePage {
   idx = signal(0);
   private timer: ReturnType<typeof setInterval> | undefined;
 
+  /** smaller copy of the built-in photos for phones */
+  mobileSrc(src: string): string {
+    return /^\/assets\/hero\/photo-\d-[a-z]+\.jpg$/.test(src) ? src.replace('.jpg', '-m.jpg') : '';
+  }
+  /** keeps the important part of each photo in view on narrow screens */
+  pos(src: string): string {
+    const hit = Object.keys(FOCUS).find((k) => src.includes(k));
+    return hit ? FOCUS[hit] : 'center';
+  }
+  /** carousel position of slide i: on (visible), prev (just left), next (waiting on the right) */
+  state(i: number): string {
+    const n = this.slides().length;
+    const p = (i - this.idx() + n) % n;
+    return p === 0 ? 'on' : p === n - 1 && n > 2 ? 'prev' : 'next';
+  }
+  /** true while the pointer or keyboard focus is inside the banner */
+  paused = false;
+  private x0 = 0;
+  touchStart(e: TouchEvent): void {
+    this.x0 = e.changedTouches[0].clientX;
+  }
+  /** swipe left / right to change the picture */
+  touchEnd(e: TouchEvent): void {
+    const dx = e.changedTouches[0].clientX - this.x0;
+    const n = this.slides().length;
+    if (Math.abs(dx) > 50 && n > 1) this.go((this.idx() + (dx < 0 ? 1 : n - 1)) % n);
+  }
+
   go(i: number): void {
     this.idx.set(i);
     this.restart();
@@ -282,9 +360,9 @@ export class HomePage {
     clearInterval(this.timer);
     if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     this.timer = setInterval(() => {
-      if (document.hidden) return;
+      if (document.hidden || this.paused) return; // stays still while the visitor hovers or tabs through the banner
       this.idx.update((i) => (i + 1) % Math.max(1, this.slides().length));
-    }, 5500);
+    }, 9000);
   }
 
   features = [
@@ -303,7 +381,7 @@ export class HomePage {
     this.seo.set({
       title: 'Indian Red & White Onion Exporter | Saumya Enterprises',
       description:
-        'Saumya Enterprises exports fresh Indian Red Onion and White Onion to importers and distributors. Bulk orders, custom packaging and export documentation support. Request a quote.',
+        'Saumya Enterprises exports fresh Indian Red and White Onion to importers and distributors. Bulk orders, custom packing, export documents. Request a quote.',
       path: '/',
       jsonLd: this.seo.organizationLd(),
     });
@@ -312,6 +390,8 @@ export class HomePage {
   firstPara(): string {
     return this.s().aboutText.split('\n')[0];
   }
+  soonPhoto = computed(() => this.site.upcomingProducts().filter((p) => p.images.length));
+  soonNoPhoto = computed(() => this.site.upcomingProducts().filter((p) => !p.images.length).map((p) => p.name).join(', '));
   upcomingNames(): string {
     return this.site.upcomingProducts().map((p) => p.name).join(', ');
   }
